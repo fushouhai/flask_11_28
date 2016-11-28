@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+{% import "_macros.html" as macros %}
+
+{% block title %}Flasky - Show_All_Users{% endblock %}
+
+{% block page_content %}
+<div class="page-header">
+    <h1>Show_ALL_Users</h1>
+</div>
+<div class="col-md-4">
+  <ul>
+      {% for user in all_users %}
+        <li><a class-"btn btn-danger"
+               href="{{ url_for('.edit_profile_admin', id=user.id) }}">
+            {{ user.username }}
+            </a>   
+      {% endfor %}
+   
+</div>
+</br>
+{% if pagination %}
+<div class="pagination">
+{{ macros.pagination_widget(pagination, '.show_all_users') }}
+</div>
+{% endif %}
+{% endblock %}
