@@ -124,7 +124,8 @@ def forget_password_set_password():
             user = User.query.filter_by(id=val_id).first()
             if user is not None:
                 user.password = form.password.data
-                db.session.add(user)               
+                db.session.add(user)  
+                db.session.commit()             
                 flash('password has changed!')
                 return redirect(url_for('auth.login'))
             else:
