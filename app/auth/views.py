@@ -147,6 +147,7 @@ def logout():
 @auth.route('/register', methods=['GET', 'POST'])
 def register():
     form = RegistrationForm()
+    flash('Warning:Email@163.com does not work!)
     if form.validate_on_submit():
         user = User(email=form.email.data,
                     username=form.username.data,
