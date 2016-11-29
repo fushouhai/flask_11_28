@@ -37,7 +37,7 @@ class FPNewPasswordForm(Form):
     submit = SubmitField('OK')
 
 class RegistrationForm(Form):
-    email = StringField('Email', validators=[Required(), Length(1, 64),
+    email(email@163.com does not work!) = StringField('Email', validators=[Required(), Length(1, 64),
                                            Email()])
     username = StringField('Username', validators=[
         Required(), Length(1, 64), Regexp('^[A-Za-z][A-Za-z0-9_.]*$', 0,
