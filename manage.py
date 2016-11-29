@@ -22,7 +22,7 @@ def test():
     import unittest
     tests = unittest.TestLoader().discover('tests')
     unittest.TextTestRunner(verbosity=2).run(tests)
-
+@manager.command
 def deploy():
     """run deployment tasks."""
     from flask_migrate import upgrade 
