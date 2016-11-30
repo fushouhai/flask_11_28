@@ -162,7 +162,7 @@ class User(UserMixin, db.Model):
         users = User.query.all()
         for user in users:
             if user.email == current_app.config['FLASKY_ADMIN']:
-                user.role = Role.query.filter_by(permission=0xff).first()
+                user.role = Role.query.filter_by(permissions=0xff).first()
                 db.session.add(user)
             db.session.commit()
 
