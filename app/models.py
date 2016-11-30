@@ -160,6 +160,16 @@ class User(UserMixin, db.Model):
         s = Serializer(current_app.config['SECRET_KEY'], 
                             expires_in=expiration)
         return s.dumps({'id':self.id})
+
+    @classmethod
+    def update_role():
+        users = User.query.all()
+        for user in users:
+            if user.email == current_app.config['FLASKY_ADMIN']:
+                user.role = Role.query.filter_by(permission=0xff).first()
+                db.session.add(user)
+        db.session.commit()
+
     @staticmethod 
     def verify_auth_token(token):
         s = Serializer(current_app.config['SECRET_KEY'])
