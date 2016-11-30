@@ -161,7 +161,7 @@ class User(UserMixin, db.Model):
                             expires_in=expiration)
         return s.dumps({'id':self.id})
 
-    @classmethod
+    @staticmethod
     def update_role():
         users = User.query.all()
         for user in users:
