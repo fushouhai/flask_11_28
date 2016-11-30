@@ -156,10 +156,6 @@ class User(UserMixin, db.Model):
                 self.role = Role.query.filter_by(default=True).first()
         if self.email is not None and self.avatar_hash is None:
             self.avatar_hash = hashlib.md5(self.email.encode('utf-8')).hexdigest()
-    def generate_auth_token(self, expiration):
-        s = Serializer(current_app.config['SECRET_KEY'], 
-                            expires_in=expiration)
-        return s.dumps({'id':self.id})
 
     @staticmethod
     def update_role():
@@ -168,8 +164,14 @@ class User(UserMixin, db.Model):
             if user.email == current_app.config['FLASKY_ADMIN']:
                 user.role = Role.query.filter_by(permission=0xff).first()
                 db.session.add(user)
-        db.session.commit()
+            db.session.commit()
 
+    def generate_auth_token(self, expiration):
+        s = Serializer(current_app.config['SECRET_KEY'], 
+                            expires_in=expiration)
+        return s.dumps({'id':self.id})
+
+    
     @staticmethod 
     def verify_auth_token(token):
         s = Serializer(current_app.config['SECRET_KEY'])
