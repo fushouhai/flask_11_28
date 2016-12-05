@@ -5,6 +5,16 @@ from ..models import User, Role, Post, Permission, Comment
 from .forms import EditProfileForm, EditProfileAdminForm, PostForm, CommentForm
 from .. import db
 from ..decorators import admin_required, permission_required
+from flask_sqlalchemy import get_debug_queries
+
+@main.after_app_request
+def after_request(response):
+    for query in get_debug_queries():
+        if query.duration >= current_app.config['FLASKY_SLOW_DB_QUERY_TIME']:
+            current_app.logger.warning(
+            'Slow query: %s\n Parameters:%s \nDurnation:%fs\nContent:%s\n'%
+             (query.statement, query.parameters, query.duration, query.context))
+    return response
 
 @main.route('/moderate/enable/<int:id>')
 @login_required
